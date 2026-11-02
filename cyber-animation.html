@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>رحلة الرسالة الآمنة</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0F1226;--panel:#171B38;--ink:#E8ECFF;--mute:#9AA3D1;--packet:#5CE1E6;--safe:#8CF2B5;--threat:#FF5D73;--line:#2A3060;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif;line-height:1.7}
+main{max-width:640px;margin:0 auto;padding:24px 18px 40px}
+h1{font-size:clamp(28px,7vw,40px);margin:0 0 6px;font-weight:700;line-height:1.3}
+.sub{color:var(--mute);margin:0 0 18px}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+svg{display:block;width:100%;height:auto;direction:ltr}
+.cap{padding:14px 18px 6px;min-height:92px}
+.cap h2{margin:0;font-size:20px}
+.cap p{margin:4px 0 0;color:var(--mute);font-size:15px}
+.bar{height:3px;background:var(--line);margin:0 18px}
+.bar i{display:block;height:100%;width:0;background:var(--packet)}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;padding:14px 18px 18px;align-items:center}
+.ctl button{font:inherit;font-size:14px;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer}
+.ctl button[aria-current="true"]{background:var(--packet);color:#0F1226;border-color:var(--packet);font-weight:600}
+.ctl button:focus-visible{outline:2px solid var(--safe);outline-offset:2px}
+.ctl .pp{margin-inline-start:auto}
+.tip{margin-top:18px;color:var(--mute);font-size:14px}
+.node{fill:#222859;stroke:var(--line);stroke-width:2}
+text{font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif}
+</style>
+</head>
+<body>
+<main>
+<h1>رحلة الرسالة الآمنة</h1>
+<p class="sub">كيف تصل رسالتك للطرف الآخر وسط الهجمات؟ أربع مشاهد تشرح الفكرة.</p>
+
+<section class="stage" aria-label="رسم متحرك للأمن السيبراني">
+<svg viewBox="0 0 400 260" role="img" aria-label="رسالة تنتقل من جهاز إلى خادم مع تشفير وجدار ناري">
+  <defs>
+    <pattern id="g" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#1F2450" stroke-width="1"/></pattern>
+    <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="400" height="260" fill="url(#g)"/>
+  <path d="M60 130H340" stroke="#2A3060" stroke-width="2" stroke-dasharray="4 6"/>
+
+  <!-- device -->
+  <g transform="translate(30,130)">
+    <rect class="node" x="-22" y="-30" width="44" height="60" rx="8"/>
+    <rect x="-16" y="-23" width="32" height="40" rx="3" fill="#0F1226"/>
+    <circle cy="23" r="2.5" fill="#9AA3D1"/>
+  </g>
+  <text x="30" y="182" fill="#9AA3D1" font-size="11" text-anchor="middle">جهازك</text>
+
+  <!-- server -->
+  <g transform="translate(370,130)">
+    <circle id="ring" r="30" fill="none" stroke="#8CF2B5" stroke-width="3" opacity="0" style="transform-box:fill-box;transform-origin:center"/>
+    <rect class="node" x="-20" y="-32" width="40" height="64" rx="6"/>
+    <g fill="#0F1226"><rect x="-14" y="-24" width="28" height="12" rx="2"/><rect x="-14" y="-6" width="28" height="12" rx="2"/><rect x="-14" y="12" width="28" height="12" rx="2"/></g>
+    <circle id="led" cx="8" cy="-18" r="2.5" fill="#9AA3D1"/>
+  </g>
+  <text x="370" y="182" fill="#9AA3D1" font-size="11" text-anchor="middle">الخادم</text>
+
+  <!-- firewall -->
+  <g id="fw" transform="translate(205,130)" opacity=".25" style="transition:opacity .5s">
+    <path d="M0 -52 L34 -38 V-4 C34 24 14 42 0 50 C-14 42 -34 24 -34 -4 V-38 Z" fill="#171B38" stroke="#8CF2B5" stroke-width="3" filter="url(#glow)"/>
+    <path d="M-13 0 L-3 10 L15 -12" fill="none" stroke="#8CF2B5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="205" y="196" fill="#9AA3D1" font-size="11" text-anchor="middle">الجدار الناري</text>
+
+  <!-- burst -->
+  <circle id="burst" cx="172" cy="130" r="16" fill="none" stroke="#FF5D73" stroke-width="3" opacity="0" style="transform-box:fill-box;transform-origin:center"/>
+
+  <!-- threats -->
+  <g id="t1" opacity="0"><circle r="11" fill="#FF5D73"/><g stroke="#FF5D73" stroke-width="3" stroke-linecap="round"><path d="M-17 0H-12M12 0H17M0 -17V-12M0 12V17M-12 -12L-9 -9M12 12L9 9M12 -12L9 -9M-12 12L-9 9"/></g><path d="M-4 -3L4 3M4 -3L-4 3" stroke="#0F1226" stroke-width="2.5" stroke-linecap="round"/></g>
+  <g id="t2" opacity="0"><circle r="11" fill="#FF5D73"/><g stroke="#FF5D73" stroke-width="3" stroke-linecap="round"><path d="M-17 0H-12M12 0H17M0 -17V-12M0 12V17M-12 -12L-9 -9M12 12L9 9M12 -12L9 -9M-12 12L-9 9"/></g><path d="M-4 -3L4 3M4 -3L-4 3" stroke="#0F1226" stroke-width="2.5" stroke-linecap="round"/></g>
+
+  <!-- packet -->
+  <g id="pk" opacity="0">
+    <rect id="pkr" x="-30" y="-14" width="60" height="28" rx="8" fill="#5CE1E6" filter="url(#glow)"/>
+    <g id="lock" opacity="0"><rect x="-26" y="-7" width="10" height="9" rx="2" fill="#0F1226"/><path d="M-24 -7V-10a3 3 0 0 1 6 0V-7" fill="none" stroke="#0F1226" stroke-width="1.8"/></g>
+    <text id="pkt" x="5" y="4" font-size="12" font-weight="700" fill="#0F1226" text-anchor="middle">مرحبا</text>
+  </g>
+</svg>
+
+<div class="cap" aria-live="polite"><h2 id="ct"></h2><p id="cd"></p></div>
+<div class="bar" aria-hidden="true"><i id="pr"></i></div>
+<div class="ctl" id="ctl"></div>
+</section>
+<p class="tip">القاعدة: التشفير يحمي المحتوى، والجدار الناري يحمي الطريق، وكلاهما معًا يحميك.</p>
+<footer style="margin-top:28px;padding-top:16px;border-top:1px solid var(--line)"><div style="font-weight:700;font-size:18px">راما صالح</div><div style="color:var(--mute);font-size:14px">مصممة ومهندسة سيبرانية</div></footer>
+</main>
+
+<script>
+const $=s=>document.querySelector(s);
+const S=[
+ {t:'رسالتك تنطلق',d:'النص هنا مكشوف. أي شخص يعترض الطريق يقدر يقرأه.',n:'الانطلاق'},
+ {t:'التشفير يقفل الرسالة',d:'قبل ما تغادر الجهاز تتحول إلى رموز لا يفهمها إلا صاحب المفتاح.',n:'التشفير'},
+ {t:'الجدار الناري يصدّ الهجوم',d:'الاتصالات المشبوهة تُفحص وتُحظر قبل ما تقترب من الخادم.',n:'الحماية'},
+ {t:'وصلت بأمان',d:'الرسالة المشفرة تعدّت الجدار، والخادم فكّ قفلها بمفتاحه.',n:'الوصول'}
+];
+const DUR=5200;
+let cur=0,playing=!matchMedia('(prefers-reduced-motion: reduce)').matches,anims=[],tids=[],t0=0,raf;
+const pk=$('#pk'),fw=$('#fw'),t1=$('#t1'),t2=$('#t2'),ring=$('#ring'),burst=$('#burst'),lock=$('#lock'),pkt=$('#pkt'),pkr=$('#pkr'),led=$('#led');
+const A=(el,kf,o)=>{const a=el.animate(kf,Object.assign({fill:'forwards'},o));anims.push(a);return a};
+const T=(f,ms)=>tids.push(setTimeout(f,ms));
+const tr=(x,y=130,s=1)=>`translate(${x}px,${y}px) scale(${s})`;
+function reset(){
+  anims.forEach(a=>a.cancel());anims=[];tids.forEach(clearTimeout);tids=[];
+  [pk,t1,t2].forEach(e=>e.style.opacity=0);
+  ring.style.opacity=0;burst.style.opacity=0;lock.style.opacity=0;
+  pkt.textContent='مرحبا';pkr.setAttribute('fill','#5CE1E6');led.setAttribute('fill','#9AA3D1');
+  fw.style.opacity=.25;
+}
+function run(i){
+  reset();
+  const x0=75,x1=325;
+  if(i===0){
+    pk.style.opacity=1;
+    A(pk,[{transform:tr(x0)},{transform:tr(x1)}],{duration:4200,easing:'ease-in-out'});
+  }
+  if(i===1){
+    pk.style.opacity=1;
+    A(pk,[{transform:tr(x0)},{transform:tr(x1)}],{duration:4600,easing:'ease-in-out'});
+    T(()=>{pkt.textContent='a9#Xk';pkr.setAttribute('fill','#8CF2B5');lock.style.opacity=1;
+      A(pk,[{filter:'brightness(1.6)'},{filter:'brightness(1)'}],{duration:500});},1100);
+  }
+  if(i===2){
+    fw.style.opacity=1;
+    [[t1,0],[t2,1700]].forEach(([t,d])=>{
+      t.style.opacity=1;
+      A(t,[{transform:tr(375,110)},{transform:tr(372,110)}],{duration:1});
+      A(t,[{transform:tr(375,d?150:105),opacity:0,offset:0},{transform:tr(375,d?150:105),opacity:1,offset:.05},{transform:tr(238,d?136:124),opacity:1,offset:.8},{transform:tr(250,d?136:124,2.2),opacity:0,offset:1}],{duration:1900,delay:d,easing:'ease-in'});
+      T(()=>{burst.setAttribute('cx',228);burst.setAttribute('cy',d?136:124);
+        A(burst,[{transform:'scale(.3)',opacity:1},{transform:'scale(1.8)',opacity:0}],{duration:700});
+        A(fw,[{filter:'brightness(2)'},{filter:'brightness(1)'}],{duration:500});},d+1500);
+    });
+  }
+  if(i===3){
+    fw.style.opacity=1;pk.style.opacity=1;
+    pkt.textContent='a9#Xk';pkr.setAttribute('fill','#8CF2B5');lock.style.opacity=1;
+    A(pk,[{transform:tr(x0)},{transform:tr(x1)}],{duration:3200,easing:'ease-in-out'});
+    T(()=>{pkt.textContent='مرحبا';pkr.setAttribute('fill','#5CE1E6');lock.style.opacity=0;
+      led.setAttribute('fill','#8CF2B5');ring.style.opacity=1;
+      A(ring,[{transform:'scale(.7)',opacity:1},{transform:'scale(1.5)',opacity:0}],{duration:1100,iterations:2});},3300);
+  }
+}
+function go(i){
+  cur=(i+S.length)%S.length;
+  $('#ct').textContent=S[cur].t;$('#cd').textContent=S[cur].d;
+  document.querySelectorAll('#ctl [data-i]').forEach(b=>b.setAttribute('aria-current',b.dataset.i==cur));
+  run(cur);t0=performance.now();
+}
+function tick(now){
+  if(playing){const p=(now-t0)/DUR;$('#pr').style.width=Math.min(p,1)*100+'%';if(p>=1)go(cur+1);}
+  raf=requestAnimationFrame(tick);
+}
+const ctl=$('#ctl');
+S.forEach((s,i)=>{const b=document.createElement('button');b.textContent=s.n;b.dataset.i=i;b.onclick=()=>go(i);ctl.appendChild(b)});
+const pp=document.createElement('button');pp.className='pp';
+const lab=()=>pp.textContent=playing?'إيقاف مؤقت':'تشغيل';
+pp.onclick=()=>{playing=!playing;lab();if(playing)go(cur)};
+lab();ctl.appendChild(pp);
+go(0);raf=requestAnimationFrame(tick);
+</script>
+</body>
+</html>
