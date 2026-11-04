@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>كيف يتعلّم الذكاء الاصطناعي</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#14101F;--panel:#1D1730;--ink:#F1EBFF;--mute:#A89BCB;--sig:#B58CFF;--ok:#7CF0C2;--bad:#FF6B6B;--amb:#FFC857;--line:#352B57;
+padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif;line-height:1.7}
+main{max-width:640px;margin:0 auto;padding:24px 18px 40px}
+h1{font-size:clamp(28px,7vw,40px);margin:0 0 6px;font-weight:700;line-height:1.3}
+.sub{color:var(--mute);margin:0 0 18px}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+svg{display:block;width:100%;height:auto;direction:ltr}
+text{font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif}
+.cap{padding:14px 18px 6px;min-height:92px}
+.cap h2{margin:0;font-size:20px}
+.cap p{margin:4px 0 0;color:var(--mute);font-size:15px}
+.bar{height:3px;background:var(--line);margin:0 18px}
+.bar i{display:block;height:100%;width:0;background:var(--amb)}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;padding:14px 18px 18px;align-items:center}
+.ctl button{font:inherit;font-size:14px;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer}
+.ctl button[aria-current="true"]{background:var(--amb);color:#14101F;border-color:var(--amb);font-weight:600}
+.ctl button:focus-visible{outline:2px solid var(--ok);outline-offset:2px}
+.ctl .pp{margin-inline-start:auto}
+.tip{margin-top:18px;color:var(--mute);font-size:14px}
+.n{fill:#2A2147;stroke:#4A3D7A;stroke-width:2;transition:fill .3s,stroke .3s}
+.e{stroke:#6B5AA6;stroke-width:1;opacity:.28;transition:stroke .4s,opacity .4s}
+</style>
+</head>
+<body>
+<main>
+<h1>كيف يتعلّم الذكاء الاصطناعي؟</h1>
+<p class="sub">شبكة عصبية تتعرّف على صورة، تخطئ، ثم تتعلّم من خطئها. أربع مشاهد.</p>
+
+<section class="stage" aria-label="رسم متحرك لشبكة عصبية">
+<svg viewBox="0 0 400 270" role="img" aria-label="شبكة عصبية من أربع طبقات تتعرف على صورة قطة">
+  <defs><filter id="glow"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <g fill="#A89BCB" font-size="11" text-anchor="middle"><text x="45" y="24">مدخلات</text><text x="187" y="24">طبقات مخفية</text><text x="330" y="24">مخرجات</text></g>
+  <g id="edges"></g><g id="nodes"></g><g id="fx"></g>
+  <g font-size="12" font-weight="600" fill="#F1EBFF"><text id="o0" x="368" y="0" text-anchor="middle" opacity=".5">قطة</text><text id="o1" x="368" y="0" text-anchor="middle" opacity=".5">كلب</text></g>
+  <g id="conf" opacity="0">
+    <text x="60" y="252" fill="#A89BCB" font-size="11" text-anchor="middle">الثقة</text>
+    <rect x="95" y="245" width="220" height="9" rx="4.5" fill="#2A2147"/>
+    <rect id="cf" x="95" y="245" width="220" height="9" rx="4.5" fill="#7CF0C2" style="transform-box:fill-box;transform-origin:left;transform:scaleX(0)"/>
+    <text id="cp" x="345" y="253" fill="#7CF0C2" font-size="12" font-weight="700" text-anchor="middle">97%</text>
+  </g>
+</svg>
+<div class="cap" aria-live="polite"><h2 id="ct"></h2><p id="cd"></p></div>
+<div class="bar" aria-hidden="true"><i id="pr"></i></div>
+<div class="ctl" id="ctl"></div>
+</section>
+<p class="tip">التعلّم هو تكرار هذه الدورة آلاف المرات: توقّع، قياس الخطأ، تعديل الأوزان.</p>
+<footer style="margin-top:28px;padding-top:16px;border-top:1px solid var(--line)"><div style="font-weight:700;font-size:18px">راما صالح</div><div style="color:var(--mute);font-size:14px">مصممة ومهندسة سيبرانية</div></footer>
+</main>
+
+<script>
+const $=s=>document.querySelector(s),NS='http://www.w3.org/2000/svg';
+const S=[
+ {t:'مدخلات: صورة قطة',d:'الصورة تتحول إلى أرقام، كل رقم يمثل سطوع نقطة، وتدخل الشبكة.',n:'المدخلات'},
+ {t:'الإشارة تمر بالطبقات',d:'كل طبقة تلتقط نمطًا أعمق: حواف، ثم أشكال، ثم ملامح.',n:'التفكير'},
+ {t:'خطأ ثم تعلّم',d:'الشبكة قالت «كلب» وهي غلط. الخطأ يرجع للخلف وتتعدّل الأوزان.',n:'التعلّم'},
+ {t:'إجابة صحيحة',d:'بعد التدريب صارت تتعرف على القطة بثقة عالية.',n:'النتيجة'}
+];
+const X=[45,140,235,330],N=[3,4,4,2],DUR=5600;
+const Y=(l,j)=>135+(j-(N[l]-1)/2)*46;
+const mk=(tag,at,p)=>{const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);p.appendChild(e);return e};
+const nodes=N.map((c,l)=>Array.from({length:c},(_,j)=>({x:X[l],y:Y(l,j)})));
+const edges=[];
+for(let l=0;l<3;l++)nodes[l].forEach(a=>nodes[l+1].forEach(b=>edges.push({l,el:mk('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,class:'e'},$('#edges')),a,b})));
+nodes.forEach(L=>L.forEach(n=>n.el=mk('circle',{cx:n.x,cy:n.y,r:11,class:'n'},$('#nodes'))));
+$('#o0').setAttribute('y',nodes[3][0].y+4);$('#o1').setAttribute('y',nodes[3][1].y+4);
+
+let cur=0,playing=!matchMedia('(prefers-reduced-motion: reduce)').matches,anims=[],tids=[],t0=0;
+const A=(el,kf,o)=>{const a=el.animate(kf,Object.assign({fill:'forwards'},o));anims.push(a);return a};
+const T=(f,ms)=>tids.push(setTimeout(f,ms));
+function light(l,col,idx){nodes[l].forEach((n,j)=>{if(idx&&!idx.includes(j))return;n.el.style.fill=col;n.el.style.stroke=col;n.el.style.filter='url(#glow)'})}
+function pulse(l,col,dir){
+  edges.filter(e=>e.l===l).forEach(e=>{
+    const [p,q]=dir>0?[e.a,e.b]:[e.b,e.a];
+    const c=mk('circle',{r:2.6,fill:col},$('#fx'));
+    const a=c.animate([{transform:`translate(${p.x}px,${p.y}px)`},{transform:`translate(${q.x}px,${q.y}px)`}],{duration:520,easing:'ease-in'});
+    a.onfinish=()=>c.remove();
+    e.el.style.stroke=col;e.el.style.opacity=.7;
+  });
+}
+function reset(){
+  anims.forEach(a=>a.cancel());anims=[];tids.forEach(clearTimeout);tids=[];
+  $('#fx').innerHTML='';
+  nodes.forEach(L=>L.forEach(n=>{n.el.style.fill='';n.el.style.stroke='';n.el.style.filter=''}));
+  edges.forEach(e=>{e.el.style.stroke='';e.el.style.opacity=''});
+  ['o0','o1'].forEach(i=>{$('#'+i).setAttribute('opacity',.5);$('#'+i).setAttribute('fill','#F1EBFF')});
+  $('#conf').setAttribute('opacity',0);$('#cf').style.transform='scaleX(0)';$('#cf').style.transition='none';
+}
+function forward(col,t){
+  T(()=>light(0,col),t);T(()=>pulse(0,col,1),t+250);
+  T(()=>light(1,col),t+800);T(()=>pulse(1,col,1),t+1000);
+  T(()=>light(2,col),t+1550);T(()=>pulse(2,col,1),t+1750);
+}
+function run(i){
+  reset();
+  const sig='#B58CFF',ok='#7CF0C2',bad='#FF6B6B',amb='#FFC857';
+  if(i===0){
+    [0,1,2].forEach(j=>T(()=>light(0,amb,[j]),300+j*450));
+  }
+  if(i===1){
+    forward(sig,200);
+    T(()=>{light(3,sig,[0]);$('#o0').setAttribute('opacity',.8)},2700);
+    T(()=>{light(3,sig,[1]);$('#o1').setAttribute('opacity',.8)},2900);
+  }
+  if(i===2){
+    forward(sig,100);
+    T(()=>{light(3,bad,[1]);$('#o1').setAttribute('opacity',1);$('#o1').setAttribute('fill',bad);$('#o1').textContent='كلب ✗'},2000);
+    T(()=>pulse(2,bad,-1),2700);T(()=>pulse(1,bad,-1),3150);T(()=>pulse(0,bad,-1),3600);
+    T(()=>{edges.forEach(e=>{e.el.style.stroke=amb;e.el.style.opacity=.6})},4200);
+  }
+  if(i===3){
+    $('#o1').textContent='كلب';
+    forward(ok,100);
+    T(()=>{light(3,ok,[0]);$('#o0').setAttribute('opacity',1);$('#o0').setAttribute('fill',ok);$('#o0').textContent='قطة ✓'},2000);
+    T(()=>{$('#conf').setAttribute('opacity',1);const f=$('#cf');f.style.transition='transform 1.4s ease-out';f.style.transform='scaleX(.97)'},2500);
+  }
+  if(i!==2)$('#o1').textContent='كلب';
+}
+function go(i){
+  cur=(i+S.length)%S.length;
+  $('#ct').textContent=S[cur].t;$('#cd').textContent=S[cur].d;
+  document.querySelectorAll('#ctl [data-i]').forEach(b=>b.setAttribute('aria-current',b.dataset.i==cur));
+  run(cur);t0=performance.now();
+}
+function tick(now){
+  if(playing){const p=(now-t0)/DUR;$('#pr').style.width=Math.min(p,1)*100+'%';if(p>=1)go(cur+1)}
+  requestAnimationFrame(tick);
+}
+S.forEach((s,i)=>{const b=document.createElement('button');b.textContent=s.n;b.dataset.i=i;b.onclick=()=>go(i);$('#ctl').appendChild(b)});
+const pp=document.createElement('button');pp.className='pp';
+const lab=()=>pp.textContent=playing?'إيقاف مؤقت':'تشغيل';
+pp.onclick=()=>{playing=!playing;lab();if(playing)go(cur)};
+lab();$('#ctl').appendChild(pp);
+go(0);requestAnimationFrame(tick);
+</script>
+</body>
+</html>
